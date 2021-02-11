@@ -27,6 +27,8 @@
     <!--- datatable --->
     <link rel="stylesheet" type="text/css" href="{{ asset('css/jquery.dataTables.min.css')}}"/>
     <script type="text/javascript" src="{{ asset('js/jquery.dataTables.min.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('js/custom.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('js/formValidations.js')}}"></script>
     
 <!--- datatable --->
     @yield('header')

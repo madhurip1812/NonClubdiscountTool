@@ -13,9 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-/*Route::get('/', function () {
-    return view('welcome');
-});*/
+Route::get('/unauthorised', function () {
+    return view('UnAuthorisedError');
+});
 //Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/', 'CategoryDiscountRuleController@editAllDiscountRules')->name('home');
 Route::get('/home', 'CategoryDiscountRuleController@editAllDiscountRules')->name('home');
@@ -47,4 +47,14 @@ Route::any('/cronLog', 'CronLogController@cronLog')->name('cronLog');
 Route::any('/getCronLogData', 'CronLogController@getCronLogData')->name('getCronLogData');
 Route::get('/uploadNonClubDiscount', 'NonClubDiscountUploadController@index')->name('uploadNonClubDiscount');
 Route::post('/uploadNonClubDiscount', 'NonClubDiscountUploadController@store')->name('storeUploadNonClubDiscount');
+
+//Rekha's Routes
+Route::any('/admin/{parameters?}','UserLoginController@index')->name('admin');
+Route::get('/logout','UserLoginController@logout')->name('logout');
+Route::any('/addcashback/{id?}','CashbackController@addcashback')->name('addcashback')->middleware('usersession');
+Route::any('/listcashback','CashbackController@listcashback')->name('listcashback');
+// Route::any('/excludeitems','CouponController@excludeitems')->name('excludeitems');
+// Route::any('/excludeitemsLog','CouponController@excludeitemsLog')->name('excludeitemsLog');
+Route::get('/CouponExcludeIds', 'CouponController@CouponExcludeIds')->name('CouponExcludeIds');
+//Route::get('/home', 'CategoryDiscountRuleController@editAllDiscountRules')->name('home');
 
