@@ -45,4 +45,6 @@ Route::any('/getProductDiffConditionLogData', 'ProductDiscountDifferenceLogContr
 //
 Route::any('/cronLog', 'CronLogController@cronLog')->name('cronLog');
 Route::any('/getCronLogData', 'CronLogController@getCronLogData')->name('getCronLogData');
+Route::get('/uploadNonClubDiscount', 'NonClubDiscountUploadController@index')->name('uploadNonClubDiscount');
+Route::post('/uploadNonClubDiscount', 'NonClubDiscountUploadController@store')->name('storeUploadNonClubDiscount');
 

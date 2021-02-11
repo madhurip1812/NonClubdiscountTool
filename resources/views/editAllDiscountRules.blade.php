@@ -28,6 +28,9 @@
                         <div class="card-header">
                             <label class="mt-2 mb-0"><h4>Non Club Member Discount Page for Product</h4></label>
                             <div class="float-right"> 
+                                <a class="btn btn-dark" type="button" href="{{url('/uploadNonClubDiscount')}}">
+                                    Upload Non Club Discount
+                                </a> 
                                 <a class="btn btn-dark" type="button" href="{{url('/prodNonClubDiscDiff')}}">
                                     View All
                                 </a> 

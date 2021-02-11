@@ -29,7 +29,7 @@ class ProductNonClubDiscountDifference extends Model
 	* @var array
 	*/
 
-	protected $fillable = ['productid', 'nonclubdiscountdifference', 'lastmodifieddate', 'lastmodifiedby', 'nonclubdiscountdifferencetype','ismanual'];
+	protected $fillable = ['productid', 'nonclubdiscountdifference', 'lastmodifieddate', 'lastmodifiedby', 'nonclubdiscountdifferencetype','ismanual','nonclubdiscount'];
 	/**
      * Indicates if the model should be timestamped.
      *
