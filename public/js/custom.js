@@ -5,9 +5,11 @@ $(document).ready(()=>{
   if(ruleFor == 'intellikit') {
     $(".product").hide();
     $(".intellikitsubscbox").show();
+    $(".cashstartenddates").hide();
   } else if(ruleFor == 'time') {
     $(".intellikitsubscbox").hide();
     $(".product").show();
+    $(".cashstartenddates").show();
   }
 });
 
@@ -18,9 +20,11 @@ $("input:radio[name='rulefor']").on('change',()=>{
    if(ruleFor == 'intellikit') { //intellikit
       $(".intellikitsubscbox").show();
 	    $(".product").hide();
+      $(".cashstartenddates").hide();
    } else if(ruleFor == 'time') { //product
        $(".intellikitsubscbox").hide();
        $(".product").show();
+       $(".cashstartenddates").show();
    } else {
 
    }

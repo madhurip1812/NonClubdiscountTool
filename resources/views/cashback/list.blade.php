@@ -1,13 +1,67 @@
-@extends('layouts.app')
+<!doctype html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-@section('content')
-<!-- <div class="main-content">
-    <div class="container-fluid"> -->
-<div class="panel panel-headline">
-    <div class="panel-heading">
-        <h3 class="panel-title">List Cashabck</h3>
+  <!-- CSRF Token -->
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+
+  <title>{{ config('app.name', 'Non Club Member Discount') }}</title>
+
+  <!-- Scripts -->
+  <script src="{{ asset('js/app.js') }}" defer></script>
+
+  <!-- Fonts -->
+  <link rel="dns-prefetch" href="//fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+
+  <!-- Styles -->
+  <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+  <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
+  <script src="{{ asset('js/jquery.min.js')}}"></script>
+  <script src="{{ asset('js/fontawesome/944cc5f91a.js')}}"></script>
+  <script src="{{ asset('plugins/jquery-validation/dist/jquery.validate.min.js')}}"></script>
+  <link href="{{ asset('css/select2.min.css')}}" rel="stylesheet" />
+  <script src="{{ asset('js/select2.min.js')}}"></script>
+  <!--- datatable --->
+  <link rel="stylesheet" type="text/css" href="{{ asset('css/jquery.dataTables.min.css')}}"/>
+  <script type="text/javascript" src="{{ asset('js/jquery.dataTables.min.js')}}"></script>
+</head>
+<body>
+  <div id="app">
+    <div id="overlay" style="display:none;">
+      <div class="spinner"></div>
+      <br/>
+      Loading...
     </div>
-    <div class="panel-body">
+    <main class="py-4">
+      @php($user = session('user'))
+      <div class="container">
+        @if ($errors->any())
+        <div class="col-md-12 alert alert-danger" role="alert" id="error-msg-block-common">
+          <ul>
+            @foreach ($errors->all() as $message)
+            <li>{{ $message }}</li>
+            @endforeach
+          </ul>
+        </div>
+        @endif
+        @if (Session::has('success'))
+        <div class="alert alert-success" role="alert" id="success-msg-block-prod">
+          <span id="success-msg-span-prod">{{ Session::get('success') }}</span>
+                <!-- <button type="button" class="close" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button> -->
+            </div>
+            @endif
+        </div>
+        <div class="col-md-12 " >
+<div class="card">
+    <div class="card-header">
+        <label class="mt-2 mb-0"><h4>List Cashabck</h4></label>
+    </div>
+    <div class="card-body">
         @if (session('status'))
         <div class="alert alert-success" role="alert">
             {{ session('status') }}
@@ -21,8 +75,8 @@
                 <input type="text" name="id" id="id" value="@if(!empty($requestData) && !empty($requestData['id'])){{$requestData['id']}}@endif" class="form-control" placeholder="Enter comma separated ids" />
             </div>
             <div class="col-md-3">
-                <span>Coupon</span>
-                <input type="text" name="coupon" id="coupon" value="@if(!empty($requestData) && !empty($requestData['coupon'])){{$requestData['coupon']}}@endif" class="form-control" placeholder="Enter Coupon Code" />
+                <span>On Coupon</span>
+                <input type="text" name="oncoupon" id="oncoupon" value="@if(!empty($requestData) && !empty($requestData['oncoupon'])){{$requestData['oncoupon']}}@endif" class="form-control" placeholder="Enter Coupon Code" />
             </div>
             <div class="col-md-3">
                 <span>Start Date</span>
@@ -79,4 +133,8 @@
     </form>
 </div>
 </div>
-@endsection
+</div>
+</main>
+</div>
+</body>
+</html>
