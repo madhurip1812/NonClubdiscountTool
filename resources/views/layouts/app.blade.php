@@ -27,7 +27,7 @@
     <!--- datatable --->
     <link rel="stylesheet" type="text/css" href="{{ asset('css/jquery.dataTables.min.css')}}"/>
     <script type="text/javascript" src="{{ asset('js/jquery.dataTables.min.js')}}"></script>
-    <script type="text/javascript" src="{{ asset('js/custom.js')}}"></script>
+    
     <script type="text/javascript" src="{{ asset('js/formValidations.js')}}"></script>
     
 <!--- datatable --->
@@ -54,23 +54,26 @@
                             <a class="nav-link" href="{{url('/nonClubMemberDisc')}}">Non Club Member Discount</a>
                         </li> -->
                         <li class="nav-item">
-                            <a class="btn btn-primary" href="{{url('/nonClubDiscDiffConditions')}}">Non Club Discount Difference</a>
+                            <a class="btn btn-primary" href="{{url('/nonClubDiscDiffConditions')}}">Non Club Discount</a>
                         </li>
                         <li class="nav-item ml-3">
-                            <a class="btn btn-primary" href="{{url('/prodNonClubDiscDiff')}}">Product Non Club Discount Difference</a>
+                            <a class="btn btn-primary" href="{{url('/prodNonClubDiscDiff')}}">Product Non Club Discount</a>
                         </li>
                         <li class="nav-item ml-3">
-                            <a class="btn btn-primary" href="{{url('/nonClubDiscDiffConditionsLog')}}">Discount Difference Log</a>
+                            <a class="btn btn-primary" href="{{url('/nonClubDiscDiffConditionsLog')}}">Discount Log</a>
                         </li>
                         <li class="nav-item ml-3">
-                            <a class="btn btn-primary" href="{{url('/prodNonClubDiscDiffLog')}}">Product Discount Difference Log</a>
+                            <a class="btn btn-primary" href="{{url('/prodNonClubDiscDiffLog')}}">Product Discount Log</a>
                         </li>
                         <li class="nav-item ml-3">
                             <a class="btn btn-primary" href="{{url('/cronLog')}}">Cron Log</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="" href="../DiscountToolLogin.php">Logout</a>
+                        <li class="nav-item ml-3">
+                            <a class="btn btn-primary" href="{{url('/addcashback')}}">Add Cashback</a>
                         </li>
+                       <!--  <li class="nav-item">
+                            <a class="" href="../DiscountToolLogin.php">Logout</a>
+                        </li> -->
                     </ul>
                     
                     </ul>

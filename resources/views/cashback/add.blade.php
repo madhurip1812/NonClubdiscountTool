@@ -27,8 +27,6 @@
 	<!--- datatable --->
 	<link rel="stylesheet" type="text/css" href="{{ asset('css/jquery.dataTables.min.css')}}"/>
 	<script type="text/javascript" src="{{ asset('js/jquery.dataTables.min.js')}}"></script>
-	<script type="text/javascript" src="{{ asset('js/custom.js')}}"></script>
-	<script type="text/javascript" src="{{ asset('js/formValidations.js')}}"></script>
 </head>
 <body>
 	<div id="app">
@@ -92,18 +90,18 @@
 				<span>Rule Name:</span> <span class="text-danger">*</span>
 			</div>
 			<div class="col-md-4">
-				<input type="text" name="rulename" id="rulename" value="@if(!empty($cashBackData)&&!empty($cashBackData->CashBackRulename)){{$cashBackData->CashBackRulename}}@endif" class="form-control" />
+				<input type="text" name="rulename" id="rulename" value="@if(!empty($cashBackData)&&!empty($cashBackData->CashBackCoupon)){{$cashBackData->CashBackCoupon}}@endif" class="form-control" />
 			</div>
 		</div>
 
-		<div class="row form-group">
+		<!-- <div class="row form-group">
 			<div class="col-md-4">
 				<span>Cashback Coupon:</span> <span class="text-danger">*</span>
 			</div>
 			<div class="col-md-4">
 				<input type="text" name="cashcoupon" id="cashcoupon" value="@if(!empty($cashBackData)&&!empty($cashBackData->CashBackCoupon)){{$cashBackData->CashBackCoupon}}@endif" class="form-control" />
 			</div>
-		</div>
+		</div> -->
 
 		<div class="row form-group">
 			<div class="col-md-4">
@@ -161,13 +159,13 @@
 
 		<div class="row form-group intellikitsubscbox">
 			<div class="col-md-4">
-				<span>Intellikit 3 Months Subscription Box No:</span> <span class="text-danger">*</span>
+				<span>Intellikit 3 Months Subscription Box No:</span>
 			</div>
 			<div class="col-md-4">
 				<select name="intellikit3monthssubscrboxno" id="intellikit3monthssubscrboxno" class="form-control">
 					<option value="">select</option>
 					@for($i = 1; $i <= 3; $i++)
-					<option value="{{$i}}" @if(!empty($subscriptionData) && count($subscriptionData) > 0 && $subscriptionData[0]->subscriptiontype == '3' && $subscriptionData[0]->subscriptionboxno == $i){{'selected'}}@endif>{{$i}}</option>
+					<option value="{{$i}}{{'_3'}}" @if(!empty($subscriptionData) && count($subscriptionData) > 0 && $subscriptionData[0]->subscriptiontype == '3' && $subscriptionData[0]->subscriptionboxno == $i){{'selected'}}@endif>{{$i}}</option>
 					@endfor
 				</select>
 			</div>
@@ -179,13 +177,13 @@
 
 		<div class="row form-group intellikitsubscbox">
 			<div class="col-md-4">
-				<span>Intellikit 6 Months Subscription Box No:</span> <span class="text-danger">*</span>
+				<span>Intellikit 6 Months Subscription Box No:</span>
 			</div>
 			<div class="col-md-4">
 				<select name="intellikit6monthssubscrboxno" id="intellikit6monthssubscrboxno"  class="form-control">
 					<option value="">select</option>
 					@for($i = 1; $i <= 6; $i++)
-					<option value="{{$i}}" @if(!empty($subscriptionData) && count($subscriptionData) > 0 && $subscriptionData[1]->subscriptiontype == '6' && $subscriptionData[1]->subscriptionboxno == $i){{'selected'}}@endif>{{$i}}</option>
+					<option value="{{$i}}{{'_6'}}" @if(!empty($subscriptionData) && count($subscriptionData) > 0 && $subscriptionData[0]->subscriptiontype == '6' && $subscriptionData[0]->subscriptionboxno == $i){{'selected'}}@endif>{{$i}}</option>
 					@endfor
 				</select>
 			</div>
@@ -197,13 +195,13 @@
 
 		<div class="row form-group intellikitsubscbox">
 			<div class="col-md-4">
-				<span>Intellikit 9 Months Subscription Box No:</span> <span class="text-danger">*</span>
+				<span>Intellikit 9 Months Subscription Box No:</span>
 			</div>
 			<div class="col-md-4">
 				<select name="intellikit9monthssubscrboxno" id="intellikit9monthssubscrboxno"  class="form-control">
 					<option value="">select</option>
 					@for($i = 1; $i <= 9; $i++)
-					<option value="{{$i}}" @if(!empty($subscriptionData) && count($subscriptionData) > 0 && $subscriptionData[2]->subscriptiontype == '9' && $subscriptionData[2]->subscriptionboxno == $i){{'selected'}}@endif>{{$i}}</option>
+					<option value="{{$i}}{{'_9'}}" @if(!empty($subscriptionData) && count($subscriptionData) > 0 && $subscriptionData[0]->subscriptiontype == '9' && $subscriptionData[0]->subscriptionboxno == $i){{'selected'}}@endif>{{$i}}</option>
 					@endfor
 				</select>
 			</div>
@@ -215,13 +213,13 @@
 
 		<div class="row form-group intellikitsubscbox">
 			<div class="col-md-4">
-				<span>Intellikit 12 Months Subscription Box No:</span> <span class="text-danger">*</span>
+				<span>Intellikit 12 Months Subscription Box No:</span>
 			</div>
 			<div class="col-md-4">
 				<select name="intellikit12monthssubscrboxno" id="intellikit12monthssubscrboxno"  class="form-control">
 					<option value="">select</option>
 					@for($i = 1; $i <= 12; $i++)
-					<option value="{{$i}}" @if(!empty($subscriptionData) && count($subscriptionData) > 0 && $subscriptionData[3]->subscriptiontype == '12' && $subscriptionData[3]->subscriptionboxno == $i){{'selected'}}@endif>{{$i}}</option>
+					<option value="{{$i}}{{'_12'}}" @if(!empty($subscriptionData) && count($subscriptionData) > 0 && $subscriptionData[0]->subscriptiontype == '12' && $subscriptionData[0]->subscriptionboxno == $i){{'selected'}}@endif>{{$i}}</option>
 					@endfor
 				</select>
 			</div>
@@ -240,7 +238,7 @@
 			</div>
 		</div>
 
-		<div class="row form-group">
+		<div class="row form-group cashstartenddates">
 			<div class="col-md-4">
 				<span>Cashback StartDate:</span> <span class="text-danger">*</span>
 			</div>
@@ -282,7 +280,7 @@
 		</div> -->
 
 
-		<div class="row form-group">
+		<div class="row form-group cashstartenddates">
 			<div class="col-md-4">
 				<span>Cashback EndDate:</span> <span class="text-danger">*</span>
 			</div>
@@ -374,6 +372,7 @@
 		<div class="row form-group text-center">
 			<div class="col-md-12">
 				<input type="submit" value="Save Details" class="btn btn-primary btn-lg" />
+				<a href="{{route('listcashback')}}" class="btn btn-success btn-lg" >Search</a>
 			</div>
 		</div>
 	</form>
@@ -382,5 +381,7 @@
 </div>
 </main>
 </div>
+<script type="text/javascript" src="{{ asset('js/custom.js')}}"></script>
+<script type="text/javascript" src="{{ asset('js/formValidations.js')}}"></script>
 </body>
 </html>

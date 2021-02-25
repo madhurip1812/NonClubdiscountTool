@@ -5,22 +5,26 @@ $(document).ready(()=>{
   if(ruleFor == 'intellikit') {
     $(".product").hide();
     $(".intellikitsubscbox").show();
+    $(".cashstartenddates").hide();
   } else if(ruleFor == 'time') {
     $(".intellikitsubscbox").hide();
     $(".product").show();
+    $(".cashstartenddates").show();
   }
 });
 
 /**  dispaly the fields as per selection of rulefor    **/
 $("input:radio[name='rulefor']").on('change',()=>{
    let ruleFor = $("input:radio[name='rulefor']:checked").val();
-   
+
    if(ruleFor == 'intellikit') { //intellikit
       $(".intellikitsubscbox").show();
 	    $(".product").hide();
+      $(".cashstartenddates").hide();
    } else if(ruleFor == 'time') { //product
        $(".intellikitsubscbox").hide();
        $(".product").show();
+       $(".cashstartenddates").show();
    } else {
 
    }
