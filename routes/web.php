@@ -58,3 +58,17 @@ Route::any('/listcashback','CashbackController@listcashback')->name('listcashbac
 Route::get('/CouponExcludeIds', 'CouponController@CouponExcludeIds')->name('CouponExcludeIds');
 //Route::get('/home', 'CategoryDiscountRuleController@editAllDiscountRules')->name('home');
 
+//poonam Routes
+//fitjunior route end
+Route::get('/PreCartOffer', 'FitUpgradePlanController@index')->name('PreCartOffer');
+Route::get('/FitJuniorPlanUpgradeSystem/{id}', 'FitUpgradePlanController@search')->name('FitJuniorPlanUpgradeSystem');
+Route::post('/FitJuniorPlanUpgradeSystemCreate', 'FitUpgradePlanController@store')->name('FitJuniorPlanUpgradeSystemCreate');
+Route::get('/FitJuniorPlanUpgradeSystemEdit', 'FitUpgradePlanController@edit')->name('FitJuniorPlanUpgradeSystemEdit');
+Route::post('/FitJuniorPlanUpgradeSystemUpdate/{id}', 'FitUpgradePlanController@update')->name('FitJuniorPlanUpgradeSystemUpdate');
+//fitjunior route end
+//infulencer bulk coupon route start
+Route::get('/InfluencersBulkCouponCode', 'InfluencersBulkCouponCodeController@index')->name('InfluencersBulkCouponCode');
+//influencer bulk coupon route end
+
+
+
