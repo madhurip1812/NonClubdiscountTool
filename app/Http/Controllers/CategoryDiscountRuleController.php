@@ -34,6 +34,7 @@ class CategoryDiscountRuleController extends Controller
     }
     public function nonClubDiscDiffConditions()
     {
+        $loggedUser = session('user');
         $url = request()->url();
         /* for new structure*/
         try {
@@ -52,10 +53,10 @@ class CategoryDiscountRuleController extends Controller
                 }]);
             }])->get();*/
         } catch (Exception $e) {
-            LogError::create(['username'=>'sandeep.tandale@firstcry.com','url'=>$url,'message'=>$e->getMessage(),'clientip'=>$_SERVER['REMOTE_ADDR'],'createddate'=>date('Y-m-d H:i:s')]);
+            LogError::create(['username'=>$loggedUser->username??'','url'=>$url,'message'=>$e->getMessage(),'clientip'=>$_SERVER['REMOTE_ADDR'],'createddate'=>date('Y-m-d H:i:s')]);
             return redirect()->back()->withErrors([$e->getMessage()]);
         } catch(\Illuminate\Database\QueryException $exception) {
-            LogError::create(['username'=>'sandeep.tandale@firstcry.com','url'=>$url,'message'=>$exception->getMessage(),'clientip'=>$_SERVER['REMOTE_ADDR'],'createddate'=>date('Y-m-d H:i:s')]);
+            LogError::create(['username'=>$loggedUser->username??'','url'=>$url,'message'=>$exception->getMessage(),'clientip'=>$_SERVER['REMOTE_ADDR'],'createddate'=>date('Y-m-d H:i:s')]);
             return redirect()->back()->withErrors([$exception->getMessage()]);
         }
     }
@@ -69,6 +70,7 @@ class CategoryDiscountRuleController extends Controller
      */
     public function updateCategoryDiscountRule(Request $request,$id)
     {
+        $loggedUser = session('user');
         $arrInput = $request->all(); 
         $url = request()->url();
         $subcategoryid = $arrInput['subcategoryid'];
@@ -79,10 +81,10 @@ class CategoryDiscountRuleController extends Controller
                     return response()->json(['errors'=>['Rule not exist on this subcategory']]);
                 }
             } catch (Exception $e) {
-                LogError::create(['username'=>'sandeep.tandale@firstcry.com','url'=>$url,'message'=>$exception->getMessage(),'clientip'=>$_SERVER['REMOTE_ADDR'],'createddate'=>date('Y-m-d H:i:s')]);
+                LogError::create(['username'=>$loggedUser->username??'','url'=>$url,'message'=>$exception->getMessage(),'clientip'=>$_SERVER['REMOTE_ADDR'],'createddate'=>date('Y-m-d H:i:s')]);
                 return response()->json(['errors'=>[$exception->getMessage()]]);
             } catch(\Illuminate\Database\QueryException $exception) {
-                LogError::create(['username'=>'sandeep.tandale@firstcry.com','url'=>$url,'message'=>$exception->getMessage(),'clientip'=>$_SERVER['REMOTE_ADDR'],'createddate'=>date('Y-m-d H:i:s')]);
+                LogError::create(['username'=>$loggedUser->username??'','url'=>$url,'message'=>$exception->getMessage(),'clientip'=>$_SERVER['REMOTE_ADDR'],'createddate'=>date('Y-m-d H:i:s')]);
                 return response()->json(['errors'=>[$exception->getMessage()]]);
             }
         }
@@ -94,7 +96,7 @@ class CategoryDiscountRuleController extends Controller
                 'avgvalueforhigh' => null,
                 'discountdifferenceforhigh' => null,
                 'lastmodifieddate' => date('Y-m-d H:i:s'),
-                'lastmodifiedby' => 'sandeep.tandale@firstcry.com',
+                'lastmodifiedby' => $loggedUser->username??'',
             ];
         } else if(isset($arrInput['typename']) && $arrInput['typename']==null) {
             $validator = Validator::make($request->all(), [
@@ -118,7 +120,7 @@ class CategoryDiscountRuleController extends Controller
             'avgvalueforhigh' => $arrInput['avgvalueforhigh'],
             'discountdifferenceforhigh' => $arrInput['discountdifferenceforhigh'],
             'lastmodifieddate' => date('Y-m-d H:i:s'),
-            'lastmodifiedby' => 'sandeep.tandale@firstcry.com',
+            'lastmodifiedby' => $loggedUser->username??'',
         ];
         try {
             $nonClubDiscDiffRule = NonClubDiscountDifferenceConditions::find($id);
@@ -131,15 +133,16 @@ class CategoryDiscountRuleController extends Controller
                 return response()->json(['data'=>'Something Went Wrong','success'=>false]);
             }
         } catch (Exception $e) {
-            LogError::create(['username'=>'sandeep.tandale@firstcry.com','url'=>$url,'message'=>$e->getMessage(),'clientip'=>$_SERVER['REMOTE_ADDR'],'createddate'=>date('Y-m-d H:i:s')]);
+            LogError::create(['username'=>$loggedUser->username??'','url'=>$url,'message'=>$e->getMessage(),'clientip'=>$_SERVER['REMOTE_ADDR'],'createddate'=>date('Y-m-d H:i:s')]);
             return response()->json(['data'=>$e->getMessage(),'success'=>false]);
         } catch(\Illuminate\Database\QueryException $exception) {
-            LogError::create(['username'=>'sandeep.tandale@firstcry.com','url'=>$url,'message'=>$exception->getMessage(),'clientip'=>$_SERVER['REMOTE_ADDR'],'createddate'=>date('Y-m-d H:i:s')]);
+            LogError::create(['username'=>$loggedUser->username??'','url'=>$url,'message'=>$exception->getMessage(),'clientip'=>$_SERVER['REMOTE_ADDR'],'createddate'=>date('Y-m-d H:i:s')]);
             return response()->json(['data'=>$e->getMessage(),'success'=>false]);
         }
     }
     public function addCategoryDiscountRule(Request $request)
     {
+        $loggedUser = session('user');
         $arrInput = $request->all(); 
         $url = request()->url();
         if(isset($arrInput['typename']) && $arrInput['typename']==null){
@@ -171,9 +174,9 @@ class CategoryDiscountRuleController extends Controller
             'avgvalueforhigh' => $arrInput['avgvalueforhigh'],
             'discountdifferenceforhigh' => $arrInput['discountdifferenceforhigh'],
             'createddate' => date('Y-m-d H:i:s'),
-            'createdby' => 'sandeep.tandale@firstcry.com',
+            'createdby' => $loggedUser->username??'',
             'lastmodifieddate' => date('Y-m-d H:i:s'),
-            'lastmodifiedby' => 'sandeep.tandale@firstcry.com',
+            'lastmodifiedby' => $loggedUser->username??'',
             'isactive' => '1',
         ];
         //dd($createData);
@@ -182,31 +185,33 @@ class CategoryDiscountRuleController extends Controller
             NonClubDiscountDifferenceConditionsLog::create($nonClubDiscDiffRule->toArray());
             return response()->json(['data'=>$nonClubDiscDiffRule->toArray(),'success'=>true]);
         } catch (Exception $e) {
-            LogError::create(['username'=>'sandeep.tandale@firstcry.com','url'=>$url,'message'=>$e->getMessage(),'clientip'=>$_SERVER['REMOTE_ADDR'],'createddate'=>date('Y-m-d H:i:s')]);
+            LogError::create(['username'=>$loggedUser->username??'','url'=>$url,'message'=>$e->getMessage(),'clientip'=>$_SERVER['REMOTE_ADDR'],'createddate'=>date('Y-m-d H:i:s')]);
             return response()->json(['errors'=>[$e->getMessage()],'success'=>false]);
         } catch(\Illuminate\Database\QueryException $exception) {
             //echo $exception->getMessage();
-            LogError::create(['username'=>'sandeep.tandale@firstcry.com','url'=>$url,'message'=>$exception->getMessage(),'clientip'=>$_SERVER['REMOTE_ADDR'],'createddate'=>date('Y-m-d H:i:s')]);
+            LogError::create(['username'=>$loggedUser->username??'','url'=>$url,'message'=>$exception->getMessage(),'clientip'=>$_SERVER['REMOTE_ADDR'],'createddate'=>date('Y-m-d H:i:s')]);
             return response()->json(['errors'=>[$exception->getMessage()],'success'=>false]);
         }
     }
     public function editAllDiscountRules()
     {
+        $loggedUser = session('user');
         $url = request()->url();
         try {
             $categories = Category::get();
             //$productsTypes = $this->getProductTypes();
             return view('editAllDiscountRules',compact('categories'));
         } catch (Exception $e) {
-            LogError::create(['username'=>'sandeep.tandale@firstcry.com','url'=>$url,'message'=>$e->getMessage(),'clientip'=>$_SERVER['REMOTE_ADDR'],'createddate'=>date('Y-m-d H:i:s')]);
+            LogError::create(['username'=>$loggedUser->username??'','url'=>$url,'message'=>$e->getMessage(),'clientip'=>$_SERVER['REMOTE_ADDR'],'createddate'=>date('Y-m-d H:i:s')]);
             return redirect()->back()->withErrors([$e->getMessage()]);
         } catch(\Illuminate\Database\QueryException $exception) {
-            LogError::create(['username'=>'sandeep.tandale@firstcry.com','url'=>$url,'message'=>$exception->getMessage(),'clientip'=>$_SERVER['REMOTE_ADDR'],'createddate'=>date('Y-m-d H:i:s')]);
+            LogError::create(['username'=>$loggedUser->username??'','url'=>$url,'message'=>$exception->getMessage(),'clientip'=>$_SERVER['REMOTE_ADDR'],'createddate'=>date('Y-m-d H:i:s')]);
             return redirect()->back()->withErrors([$exception->getMessage()]);
         }
     }
     public function getProductTypes()
     {
+        $loggedUser = session('user');
         $subCategoryId = request()->get('subCategoryId');
         $url = request()->url();
         /*$myJSON = ['MethodName' => 'GetProductInfoWithType','GetData' => '{&quot;ReqData1&quot;:\'{&quot;psubcategyid&quot;:['.$subCategoryId.'],&quot;@PageNo&quot;: &quot;1&quot;}\'}'];
@@ -249,12 +254,12 @@ class CategoryDiscountRuleController extends Controller
             return ['success'=>true, 'data'=>array_unique($objProductInfoWithType->toArray(),SORT_REGULAR)];
         } catch (Exception $e) {
             $subCatLevelExist = false;
-            LogError::create(['username'=>'sandeep.tandale@firstcry.com','url'=>$url,'message'=>$exception->getMessage(),'clientip'=>$_SERVER['REMOTE_ADDR'],'createddate'=>date('Y-m-d H:i:s')]);
+            LogError::create(['username'=>$loggedUser->username??'','url'=>$url,'message'=>$exception->getMessage(),'clientip'=>$_SERVER['REMOTE_ADDR'],'createddate'=>date('Y-m-d H:i:s')]);
             return ['success'=>false,'data'=> $e->getMessage()];
         } catch(\Illuminate\Database\QueryException $exception) {
             $subCatLevelExist = false;
         //echo $exception->getMessage();
-            LogError::create(['username'=>'sandeep.tandale@firstcry.com','url'=>$url,'message'=>$exception->getMessage(),'clientip'=>$_SERVER['REMOTE_ADDR'],'createddate'=>date('Y-m-d H:i:s')]);
+            LogError::create(['username'=>$loggedUser->username??'','url'=>$url,'message'=>$exception->getMessage(),'clientip'=>$_SERVER['REMOTE_ADDR'],'createddate'=>date('Y-m-d H:i:s')]);
             return ['success'=>false,'data'=> $exception->getMessage()];
         }
         //$subCategories = SubCategory::where('productcatid',$catId)->get();
@@ -262,11 +267,13 @@ class CategoryDiscountRuleController extends Controller
     }
     public function getSubCategories()
     {
+        $loggedUser = session('user');
         $catId = request()->get('categoryid');
         $subCategories = SubCategory::where('productcatid',$catId)->get();
         return $subCategories;
     }
     public function getExistingRule(){
+        $loggedUser = session('user');
         $url = request()->url();
         $subCatId = request()->get('subCatId');
         $typeName = request()->get('typeName');
@@ -290,12 +297,12 @@ class CategoryDiscountRuleController extends Controller
                 return ['success'=>true,'data'=> $nonClubDiscDiffRule->first(),'subCatLevelExist' => $subCatLevelExist];
             } catch (Exception $e) {
                 $subCatLevelExist = false;
-                LogError::create(['username'=>'sandeep.tandale@firstcry.com','url'=>$url,'message'=>$e->getMessage(),'clientip'=>$_SERVER['REMOTE_ADDR'],'createddate'=>date('Y-m-d H:i:s')]);
+                LogError::create(['username'=>$loggedUser->username??'','url'=>$url,'message'=>$e->getMessage(),'clientip'=>$_SERVER['REMOTE_ADDR'],'createddate'=>date('Y-m-d H:i:s')]);
                 return ['success'=>false,'data'=> $e->getMessage(),'subCatLevelExist' => $subCatLevelExist];
             } catch(\Illuminate\Database\QueryException $exception) {
                 $subCatLevelExist = false;
             //echo $exception->getMessage();
-                LogError::create(['username'=>'sandeep.tandale@firstcry.com','url'=>$url,'message'=>$exception->getMessage(),'clientip'=>$_SERVER['REMOTE_ADDR'],'createddate'=>date('Y-m-d H:i:s')]);
+                LogError::create(['username'=>$loggedUser->username??'','url'=>$url,'message'=>$exception->getMessage(),'clientip'=>$_SERVER['REMOTE_ADDR'],'createddate'=>date('Y-m-d H:i:s')]);
                 return ['success'=>false,'data'=> $exception->getMessage(),'subCatLevelExist' => $subCatLevelExist];
             }
         } else {
@@ -304,6 +311,7 @@ class CategoryDiscountRuleController extends Controller
     }
     public function getSubCatWiseDetail()
     {
+        $loggedUser = session('user');
         $subCategoryId = request()->get('subCategoryId');
         $objSubvalue = SubCategory::where('subcatid',$subCategoryId)->with(['subcatdiscountRule' => function ($qry) {
                 $qry->orderBy('typeid', 'ASC');

@@ -14,7 +14,7 @@
             @foreach($data as $key => $value)
                 <tr>
                     <td >{{$value->productid ?? ''}}</td>
-                    <td >{{$value->productinfowithtype->productname ?? ''}}</td>
+                    <td >{{$value->ProductInfoWithTypeMRPChange->productname ?? ''}}</td>
                     <td >{{$value->nonclubdiscountdifference ?? ''}}</td>
                     <td >{{$value->nonclubdiscountdifferencetype ?? ''}}</td>
                     <td >{{date('d-m-Y',strtotime($value->lastmodifieddate)) ?? ''}}</td>

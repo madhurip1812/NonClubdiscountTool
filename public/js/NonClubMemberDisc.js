@@ -357,21 +357,29 @@ $(document).on("keydown",".numbercommatxt",function(e){
 function changeProdRule(id,type) {
     if(type=='edit' || type=='add'){
         $(".cls_input_"+id).show();
-        $(".cls_span_"+id).hide();
+        $(".cls_span_"+id).hide();nonclubdiscountdifference
         $("#btn_prod_disc_save_"+id).show();
         $("#btn_prod_disc_edit_"+id).hide();       
     } else if(type=='save'){
         var nonclubdiscountdifference = $("#nonclubdiscountdifference_"+id).val();
+        var maxdisc = $("#nonclubdiscountdifference_"+id).attr('max');
+        // console.log(maxdisc);return;
         if(nonclubdiscountdifference=='' || isNaN(nonclubdiscountdifference) || nonclubdiscountdifference<1){
             $("#nonclubdiscountdifference_"+id).addClass('border border-danger');
+            $("#err-nonclubdiscountdifference_"+id).html('Please Enter valid integer value greater than 0');
             $("#err-nonclubdiscountdifference_"+id).show();
-        } else{
+        } else if(nonclubdiscountdifference > maxdisc){
+            $("#nonclubdiscountdifference_"+id).addClass('border border-danger');
+            $("#err-nonclubdiscountdifference_"+id).html("Non club discount can not exceed "+maxdisc);
+            $("#err-nonclubdiscountdifference_"+id).show();
+        } else {
+            $("#err-nonclubdiscountdifference_"+id).hide();
             $('#overlay').fadeIn();
             var token = $("#token").val();
             $.ajax({
                 type:'POST',
                 url:"./updateProductDiscountRule",
-                data:{'productid':id,'nonclubdiscountdifference':nonclubdiscountdifference,'_token': token},
+                data:{'maxdisc':maxdisc,'productid':id,'nonclubdiscountdifference':nonclubdiscountdifference,'_token': token},
                 //dataType:'json',
                 success:function(output) {
                     $('#overlay').fadeOut();

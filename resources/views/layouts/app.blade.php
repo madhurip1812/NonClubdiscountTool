@@ -68,6 +68,9 @@
                         <li class="nav-item ml-3">
                             <a class="btn btn-primary" href="{{url('/cronLog')}}">Cron Log</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="" href="../DiscountToolLogin.php">Logout</a>
+                        </li>
                     </ul>
                     
                     </ul>

@@ -5,12 +5,12 @@ namespace App\Http\Controllers;
 use Validator;
 use App\Category;
 use App\SubCategory;
-use App\ProductInfoWithType;
+use App\ProductInfoWithTypeMRPChange;
 use App\NonClubDiscountDifferenceConditions;
 use App\NonClubDiscountDifferenceConditionsLog;
 use Illuminate\Http\Request;
 
-class CategoryDiscountRuleController extends Controller
+class CategoryDiscountRuleControllerBeforeErrorLog extends Controller
 {
     /**
      * Create a new controller instance.
@@ -76,7 +76,7 @@ class CategoryDiscountRuleController extends Controller
                 'avgvalueforhigh' => null,
                 'discountdifferenceforhigh' => null,
                 'lastmodifieddate' => date('Y-m-d H:i:s'),
-                'lastmodifiedby' => 'sandeep.tandale@firstcry.com',
+                'lastmodifiedby' => session('user.username')??'',
             ];
         } else if(isset($arrInput['typename']) && $arrInput['typename']==null) {
             $validator = Validator::make($request->all(), [
@@ -100,7 +100,7 @@ class CategoryDiscountRuleController extends Controller
             'avgvalueforhigh' => $arrInput['avgvalueforhigh'],
             'discountdifferenceforhigh' => $arrInput['discountdifferenceforhigh'],
             'lastmodifieddate' => date('Y-m-d H:i:s'),
-            'lastmodifiedby' => 'sandeep.tandale@firstcry.com',
+            'lastmodifiedby' => session('user.username')??'',
         ];
         try {
             $nonClubDiscDiffRule = NonClubDiscountDifferenceConditions::find($id);
@@ -148,9 +148,9 @@ class CategoryDiscountRuleController extends Controller
             'avgvalueforhigh' => $arrInput['avgvalueforhigh'],
             'discountdifferenceforhigh' => $arrInput['discountdifferenceforhigh'],
             'createddate' => date('Y-m-d H:i:s'),
-            'createdby' => 'sandeep.tandale@firstcry.com',
+            'createdby' => session('user.username')??'',
             'lastmodifieddate' => date('Y-m-d H:i:s'),
-            'lastmodifiedby' => 'sandeep.tandale@firstcry.com',
+            'lastmodifiedby' => session('user.username')??'',
             'isactive' => '1',
         ];
         //dd($createData);
@@ -171,7 +171,7 @@ class CategoryDiscountRuleController extends Controller
     public function getProductTypes()
     {
         $subCategoryId = request()->get('subCategoryId');
-        /*$myJSON = ['MethodName' => 'GetProductInfoWithType','GetData' => '{&quot;ReqData1&quot;:\'{&quot;psubcategyid&quot;:['.$subCategoryId.'],&quot;@PageNo&quot;: &quot;1&quot;}\'}'];
+        /*$myJSON = ['MethodName' => 'GetProductInfoWithTypeMRPChange','GetData' => '{&quot;ReqData1&quot;:\'{&quot;psubcategyid&quot;:['.$subCategoryId.'],&quot;@PageNo&quot;: &quot;1&quot;}\'}'];
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_URL => "http://110.10.7.80/firstcry/fcevents/getdata?ReqID=121212121212122454545",
@@ -206,8 +206,8 @@ class CategoryDiscountRuleController extends Controller
             }
             return array_unique($newArr, SORT_REGULAR);
         }*/
-        $objProductInfoWithType = ProductInfoWithType::select('typeid','typetitle')->where('subcategyid',$subCategoryId)->get();
-        return array_unique($objProductInfoWithType->toArray(),SORT_REGULAR);
+        $objProductInfoWithTypeMRPChange = ProductInfoWithTypeMRPChange::select('typeid','typetitle')->where('subcategyid',$subCategoryId)->get();
+        return array_unique($objProductInfoWithTypeMRPChange->toArray(),SORT_REGULAR);
         //$subCategories = SubCategory::where('productcatid',$catId)->get();
         //return $subCategories;
     }

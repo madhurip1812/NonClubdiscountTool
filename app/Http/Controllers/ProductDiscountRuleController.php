@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 //use App\FCProductInfo;
 use App\LogError;
 use Illuminate\Http\Request;
-use App\ProductInfoWithType;
+use App\ProductInfoWithTypeMRPChange;
 use App\ProductNonClubDiscountDifference;
 use App\ProductNonClubDiscountDifferenceLog;
 
@@ -18,24 +18,27 @@ class ProductDiscountRuleController extends Controller
      */
     public function prodNonClubDiscDiff()
     {
+        $loggedUser = session('user');
         $url = request()->url();
         try{
             $productNonClubDiscountDifference = ProductNonClubDiscountDifference::paginate(50);
             return view('productNonClubDiscountDifference',compact('productNonClubDiscountDifference'));
         } catch (Exception $e) {
-            LogError::create(['username'=>'sandeep.tandale@firstcry.com','url'=>$url,'message'=>$e->getMessage(),'clientip'=>$_SERVER['REMOTE_ADDR'],'createddate'=>date('Y-m-d H:i:s')]);
+            LogError::create(['username'=>$loggedUser->username??'','url'=>$url,'message'=>$e->getMessage(),'clientip'=>$_SERVER['REMOTE_ADDR'],'createddate'=>date('Y-m-d H:i:s')]);
             return redirect()->back()->withErrors([$e->getMessage()]);
         } catch(\Illuminate\Database\QueryException $exception) {
-            LogError::create(['username'=>'sandeep.tandale@firstcry.com','url'=>$url,'message'=>$exception->getMessage(),'clientip'=>$_SERVER['REMOTE_ADDR'],'createddate'=>date('Y-m-d H:i:s')]);
+            LogError::create(['username'=>$loggedUser->username??'','url'=>$url,'message'=>$exception->getMessage(),'clientip'=>$_SERVER['REMOTE_ADDR'],'createddate'=>date('Y-m-d H:i:s')]);
             return redirect()->back()->withErrors([$exception->getMessage()]);
         }
     }
     public function searchProductDiscRule()
     {
+        $loggedUser = session('user');
     	$arrProductIds = request()->get('arrProductIds');
     	$html = '';
         $url = request()->url();
-        //$myJSON = ['MethodName' => 'GetProductInfoWithType','GetData' => '{&quot;ReqData1&quot;:\'{&quot;psubcategyid&quot;:['.$subCategoryId.'],&quot;@PageNo&quot;: &quot;1&quot;}\'}'];
+        $maxdisc = 75;
+        //$myJSON = ['MethodName' => 'GetProductInfoWithTypeMRPChange','GetData' => '{&quot;ReqData1&quot;:\'{&quot;psubcategyid&quot;:['.$subCategoryId.'],&quot;@PageNo&quot;: &quot;1&quot;}\'}'];
         $arrNotFoundProdId = [];
     	foreach ($arrProductIds as $key => $value) {
     		if($value!=''){
@@ -55,17 +58,19 @@ class ProductDiscountRuleController extends Controller
                 $response = curl_exec($curl);
                 $response_de = json_decode($response);*/
                 try{
-                    $objProductInfoWithType = ProductInfoWithType::select('productid','productname')->where('productid',$value)->first();
+                    $objProductInfoWithTypeMRPChange = ProductInfoWithTypeMRPChange::select('productid','productname','clubdiscount')->where('productid',$value)->first();
                     //if(count($response_de->data_1_1_1)>1){
-                    if(!is_null($objProductInfoWithType)){
-                        //$arrProdDetail = $response_de->data_1_1_1[1];
-                        $arrProdDetail = [$objProductInfoWithType->productid,$objProductInfoWithType->productname];
+                    if(!is_null($objProductInfoWithTypeMRPChange)){
+                        if($objProductInfoWithTypeMRPChange->clubdiscount <= 75)
+                            $maxdisc = $objProductInfoWithTypeMRPChange->clubdiscount;
+
+                        $arrProdDetail = [$objProductInfoWithTypeMRPChange->productid,$objProductInfoWithTypeMRPChange->productname];
         	    		$productNonClubDiscountDifference = ProductNonClubDiscountDifference::find($value);
         	    		if($productNonClubDiscountDifference!=null){
         		            $html .= '<tr id="'.$productNonClubDiscountDifference->productid.'">';
                             $html .= '<td>'.$arrProdDetail[0].'</td>';
         		            $html .= '<td>'.$arrProdDetail[1].'</td>';
-        		            $html .= '<td><input type="text" name="nonclubdiscountdifference" id="nonclubdiscountdifference_'.$productNonClubDiscountDifference->productid.'" value="'.$productNonClubDiscountDifference->nonclubdiscountdifference.'" class="numbercommatxt form-control cls_input_'.$productNonClubDiscountDifference->productid.'"  style="display: none;" maxlength="10"><span id="err-nonclubdiscountdifference_'.$productNonClubDiscountDifference->productid.'" class="text-danger" style="display:none;">Please Enter valid integer value greater than 0</span><span class="cls_span_'.$productNonClubDiscountDifference->productid.'" id="span_nonclubdiscountdifference_'.$productNonClubDiscountDifference->productid.'">'.$productNonClubDiscountDifference->nonclubdiscountdifference.'</span></td>';
+        		            $html .= '<td><input type="text" max="'.$maxdisc.'" name="nonclubdiscountdifference" id="nonclubdiscountdifference_'.$productNonClubDiscountDifference->productid.'" value="'.$productNonClubDiscountDifference->nonclubdiscountdifference.'" class="numbercommatxt form-control cls_input_'.$productNonClubDiscountDifference->productid.'"  style="display: none;" maxlength="2"><span id="err-nonclubdiscountdifference_'.$productNonClubDiscountDifference->productid.'" class="text-danger" style="display:none;"></span><span class="cls_span_'.$productNonClubDiscountDifference->productid.'" id="span_nonclubdiscountdifference_'.$productNonClubDiscountDifference->productid.'">'.$productNonClubDiscountDifference->nonclubdiscountdifference.'</span></td>';
         		            $html .= '<td><span id="span_nonclubdiscountdifferencetype_'.$productNonClubDiscountDifference->productid.'">'.$productNonClubDiscountDifference->nonclubdiscountdifferencetype.'</span></td>';
                             $ddt = ($productNonClubDiscountDifference->lastmodifieddate) ? date('d/m/Y',strtotime($productNonClubDiscountDifference->lastmodifieddate)) : '';
         		            $html .= '<td><span id="span_lastmodifieddate_'.$productNonClubDiscountDifference->productid.'">'.$ddt.'</span></td>';
@@ -83,7 +88,7 @@ class ProductDiscountRuleController extends Controller
         	    			$html .= '<tr id="'.$value.'">';
         		            $html .= '<td>'.$arrProdDetail[0].'</td>';
         		            $html .= '<td>'.$arrProdDetail[1].'</td>';
-        		            $html .= '<td><input type="text" name="nonclubdiscountdifference" id="nonclubdiscountdifference_'.$value.'" class="numbercommatxt form-control cls_input_'.$value.'"  style="display: none;" maxlength="10"><span class="cls_span_'.$value.'" id="span_nonclubdiscountdifference_'.$value.'"></span></td>';
+        		            $html .= '<td><input type="text" max="'.$maxdisc.'" name="nonclubdiscountdifference" id="nonclubdiscountdifference_'.$value.'" class="numbercommatxt form-control cls_input_'.$value.'"  style="display: none;" maxlength="10"><span class="cls_span_'.$value.'" id="span_nonclubdiscountdifference_'.$value.'"></span></td>';
         		            $html .= '<td><span id="span_nonclubdiscountdifferencetype_'.$value.'"></span></td>';
         		            $html .= '<td><span id="span_lastmodifieddate_'.$value.'"></span></td>';
         		            $html .= '<td><span id="span_lastmodifiedby_'.$value.'"></span></td>';
@@ -98,10 +103,10 @@ class ProductDiscountRuleController extends Controller
                     }
                     return response()->json(['success'=>true,'found'=>$html,'notfound'=>implode(',',$arrNotFoundProdId)]);
                 } catch (Exception $e) {
-                    LogError::create(['username'=>'sandeep.tandale@firstcry.com','url'=>$url,'message'=>$e->getMessage(),'clientip'=>$_SERVER['REMOTE_ADDR'],'createddate'=>date('Y-m-d H:i:s')]);
+                    LogError::create(['username'=>$loggedUser->username??'','url'=>$url,'message'=>$e->getMessage(),'clientip'=>$_SERVER['REMOTE_ADDR'],'createddate'=>date('Y-m-d H:i:s')]);
                     return response()->json(['success'=>false,'msg'=>$e->getMessage()]);
                 } catch(\Illuminate\Database\QueryException $exception) {
-                    LogError::create(['username'=>'sandeep.tandale@firstcry.com','url'=>$url,'message'=>$exception->getMessage(),'clientip'=>$_SERVER['REMOTE_ADDR'],'createddate'=>date('Y-m-d H:i:s')]);
+                    LogError::create(['username'=>$loggedUser->username??'','url'=>$url,'message'=>$exception->getMessage(),'clientip'=>$_SERVER['REMOTE_ADDR'],'createddate'=>date('Y-m-d H:i:s')]);
                     return response()->json(['success'=>false,'msg'=>$exception->getMessage()]);
                 }
     		}
@@ -112,15 +117,25 @@ class ProductDiscountRuleController extends Controller
     }
     public function updateProductDiscountRule(Request $request)
     {
+        $loggedUser = session('user');
     	$arrInput = $request->all(); 
         $url = request()->url();
+        $maxdisc = 75;
+
+        $objProductInfoWithTypeMRPChange = ProductInfoWithTypeMRPChange::where('productid',$arrInput['productid'])->first();
+
+        if($objProductInfoWithTypeMRPChange->clubdiscount <= 75)
+            $maxdisc = $objProductInfoWithTypeMRPChange->clubdiscount;
+
+        if($arrInput['productid'] > $maxdisc)
+            return response()->json(['data'=>"Non club discount can not exceed ".$maxdisc,'success'=>false]);
 
         $updateData = [
             'nonclubdiscountdifference' => $arrInput['nonclubdiscountdifference'],
             'nonclubdiscountdifferencetype' => 'ManualDiscountDifference',
             'ismanual' => 1,
             'lastmodifieddate' => date('Y-m-d H:i:s'),
-            'lastmodifiedby' => 'sandeep.tandale@firstcry.com',
+            'lastmodifiedby' => $loggedUser->username??'',
         ];
         try {
             $nonClubDiscDiffRule = ProductNonClubDiscountDifference::updateOrCreate([
@@ -134,11 +149,11 @@ class ProductDiscountRuleController extends Controller
                 return response()->json(['data'=>'Something Went Wrong','success'=>false]);
             }*/
         } catch (Exception $e) {
-            LogError::create(['username'=>'sandeep.tandale@firstcry.com','url'=>$url,'message'=>$e->getMessage(),'clientip'=>$_SERVER['REMOTE_ADDR'],'createddate'=>date('Y-m-d H:i:s')]);
+            LogError::create(['username'=>$loggedUser->username??'','url'=>$url,'message'=>$e->getMessage(),'clientip'=>$_SERVER['REMOTE_ADDR'],'createddate'=>date('Y-m-d H:i:s')]);
             return response()->json(['data'=>$e->getMessage(),'success'=>false]);
         } catch(\Illuminate\Database\QueryException $exception) {
             //echo $exception->getMessage();
-            LogError::create(['username'=>'sandeep.tandale@firstcry.com','url'=>$url,'message'=>$exception->getMessage(),'clientip'=>$_SERVER['REMOTE_ADDR'],'createddate'=>date('Y-m-d H:i:s')]);
+            LogError::create(['username'=>$loggedUser->username??'','url'=>$url,'message'=>$exception->getMessage(),'clientip'=>$_SERVER['REMOTE_ADDR'],'createddate'=>date('Y-m-d H:i:s')]);
             return response()->json(['data'=>$exception->getMessage(),'success'=>false]);
         }
     }

@@ -32,7 +32,7 @@ class NonClubDiscountUploadController extends Controller
         $productid = "";
         $nonclubdiscountdifference = "";
         $lastmodifieddate = date('Y-m-d H:i:s');
-        $lastmodifiedby = 'sandeep.tandale@firstcry.com';
+        $lastmodifiedby = session('user.username')??'';
         $nonclubdiscountdifferencetype = 'ManualDiscountDifference';
         $ismanual = 1;
 

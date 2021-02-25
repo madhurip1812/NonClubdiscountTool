@@ -37,8 +37,8 @@ class ProductNonClubDiscountDifferenceLog extends Model
      */
     public $timestamps = false;
 
-    public function productinfowithtype()
+    public function ProductInfoWithTypeMRPChange()
     {
-        return $this->belongsTo('App\ProductInfoWithType', 'productid', 'productid');
+        return $this->belongsTo('App\ProductInfoWithTypeMRPChange', 'productid', 'productid');
     }
 }

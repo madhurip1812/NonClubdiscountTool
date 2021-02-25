@@ -49,6 +49,6 @@ class ProductNonClubDiscountDifference extends Model
      */
     public function product()
     {
-        return $this->belongsTo('App\ProductInfoWithType', 'productid', 'productid');
+        return $this->belongsTo('App\ProductInfoWithTypeMRPChange', 'productid', 'productid');
     }
 }
