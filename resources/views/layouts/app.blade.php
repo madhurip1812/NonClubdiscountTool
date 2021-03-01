@@ -29,11 +29,12 @@
     <script type="text/javascript" src="{{ asset('js/jquery.dataTables.min.js')}}"></script>
     
     <script type="text/javascript" src="{{ asset('js/formValidations.js')}}"></script>
-    
+    <script src="{{ asset('js/fitjuniorplan.js') }}" ></script>
 <!--- datatable --->
     @yield('header')
 </head>
 <body>
+    @php($user = session('user'))
     <div id="app">
         <div id="overlay" style="display:none;">
                 <div class="spinner"></div>
@@ -46,38 +47,59 @@
             </a>
             <div class="container">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mr-auto">
-                        <!--<li class="nav-item">
-                            <a class="nav-link" href="{{url('/home')}}">Home</a>
-                        </li>
+                   <!--  <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="{{url('/nonClubMemberDisc')}}">Non Club Member Discount</a>
-                        </li> -->
-                        <li class="nav-item">
-                            <a class="btn btn-primary" href="{{url('/nonClubDiscDiffConditions')}}">Non Club Discount</a>
+                            <a class="btn btn-primary btn-sm" href="{{url('/nonClubDiscDiffConditions')}}">Non Club Discount</a>
                         </li>
                         <li class="nav-item ml-3">
-                            <a class="btn btn-primary" href="{{url('/prodNonClubDiscDiff')}}">Product Non Club Discount</a>
+                            <a class="btn btn-primary btn-sm" href="{{url('/prodNonClubDiscDiff')}}">Product Non Club Discount</a>
                         </li>
                         <li class="nav-item ml-3">
-                            <a class="btn btn-primary" href="{{url('/nonClubDiscDiffConditionsLog')}}">Discount Log</a>
+                            <a class="btn btn-primary btn-sm" href="{{url('/nonClubDiscDiffConditionsLog')}}">Discount Log</a>
                         </li>
                         <li class="nav-item ml-3">
-                            <a class="btn btn-primary" href="{{url('/prodNonClubDiscDiffLog')}}">Product Discount Log</a>
+                            <a class="btn btn-primary btn-sm" href="{{url('/prodNonClubDiscDiffLog')}}">Product Discount Log</a>
                         </li>
                         <li class="nav-item ml-3">
-                            <a class="btn btn-primary" href="{{url('/cronLog')}}">Cron Log</a>
+                            <a class="btn btn-primary btn-sm" href="{{url('/cronLog')}}">Cron Log</a>
                         </li>
                         <li class="nav-item ml-3">
-                            <a class="btn btn-primary" href="{{url('/addcashback')}}">Add Cashback</a>
+                            <a class="btn btn-primary btn-sm" href="{{url('/addcashback')}}">Add Cashback</a>
                         </li>
-                       <!--  <li class="nav-item">
-                            <a class="" href="../DiscountToolLogin.php">Logout</a>
-                        </li> -->
-                    </ul>
-                    
-                    </ul>
+                        <li class="nav-item ml-3">
+                            <a class="btn btn-primary btn-sm" href="{{url('/PreCartOffer')}}">Pre Cart Offer</a>
+                        </li>
+                        <li class="nav-item ml-3">
+                            <a class="btn btn-sm btn-danger" href="{{url('logout')}}">Logout</a>
+                        </li>
+                    </ul> -->
+                    <div class="btn-group ">
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Club/Non Club Discount
+                        </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="{{url('/nonClubDiscDiffConditions')}}">Non Club Discount Difference</a>
+                            <a class="dropdown-item" href="{{url('/prodNonClubDiscDiff')}}">Product Non Club Discount Difference</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{{url('/nonClubDiscDiffConditionsLog')}}">Discount Difference Log</a>
+                            <a class="dropdown-item" href="{{url('/prodNonClubDiscDiffLog')}}">Product Discount Log</a>
+                            <a class="dropdown-item" href="{{url('/cronLog')}}">Cron Log</a>
+                        </div>
+                    </div>
+                    <div class="btn-group ml-3">
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Cashback
+                        </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="{{url('/listcashback')}}">Search Cashback</a>
+                            <a class="dropdown-item" href="{{url('/addcashback')}}">Add Cashback</a>
+                            <a class="dropdown-item" href="{{url('/PreCartOffer')}}">Pre Cart Offer</a>
+                        </div>
+                    </div>
                 </div>
+                @if (Session::has('user'))
+                    <a class="btn btn-danger" href="{{url('logout')}}">Logout</a>
+                @endif                
             </div>
         </nav>
         <main class="py-4">

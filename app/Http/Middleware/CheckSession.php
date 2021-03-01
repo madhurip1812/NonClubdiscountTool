@@ -17,6 +17,8 @@ class CheckSession
         if(Session::has('user'))
             return $next($request);
         else 
-            return redirect('/unauthorised');
+            return redirect('../DiscountToolLogin.php');
+
+            // return redirect('/unauthorised');
     }
 }

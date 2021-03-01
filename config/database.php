@@ -82,6 +82,26 @@ return [
             ]) : [],
         ],
 
+        'mysql_commonmaster' => [
+            'driver' => 'mysql',
+            'url' => env('DATABASE_URL'),
+            'host' => env('DB_HOST_COMMONMASTER'),
+            'port' => env('DB_PORT_COMMONMASTER'),
+            'database' => env('DB_DATABASE_COMMONMASTER'),
+            'username' => env('DB_USERNAME_COMMONMASTER'),
+            'password' => env('DB_PASSWORD_COMMONMASTER'),
+            'unix_socket' => env('DB_SOCKET', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'strict' => true,
+            'engine' => null,
+            'options' => extension_loaded('pdo_mysql') ? array_filter([
+                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+            ]) : [],
+        ],
+
         /*'mysql_master' => [
             'driver' => 'mysql',
             'url' => env('MASTER_DATABASE_URL'),

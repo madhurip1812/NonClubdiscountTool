@@ -368,7 +368,7 @@ function changeProdRule(id,type) {
             $("#nonclubdiscountdifference_"+id).addClass('border border-danger');
             $("#err-nonclubdiscountdifference_"+id).html('Please Enter valid integer value greater than 0');
             $("#err-nonclubdiscountdifference_"+id).show();
-        } else if(nonclubdiscountdifference > maxdisc){
+        } else if(parseInt(nonclubdiscountdifference) > parseInt(maxdisc)){
             $("#nonclubdiscountdifference_"+id).addClass('border border-danger');
             $("#err-nonclubdiscountdifference_"+id).html("Non club discount can not exceed "+maxdisc);
             $("#err-nonclubdiscountdifference_"+id).show();

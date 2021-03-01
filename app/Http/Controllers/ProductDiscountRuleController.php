@@ -127,7 +127,7 @@ class ProductDiscountRuleController extends Controller
         if($objProductInfoWithTypeMRPChange->clubdiscount <= 75)
             $maxdisc = $objProductInfoWithTypeMRPChange->clubdiscount;
 
-        if($arrInput['productid'] > $maxdisc)
+        if($arrInput['nonclubdiscountdifference'] > $maxdisc)
             return response()->json(['data'=>"Non club discount can not exceed ".$maxdisc,'success'=>false]);
 
         $updateData = [

@@ -25,44 +25,58 @@ class UserLoginController extends Controller
         $secretkey = $decodedParams[6];
         $countrycode = $decodedParams[7];
         
+        /*$arrUser['username'] =  $emailaddress;
+        $user = (object)$arrUser;
+        Session::put('user',$user);
+        return redirect('/');*/
+
         $whereArr = array();
-        $whereArr['username'] = $emailaddress;
-        $whereArr['password'] = $password;
-        $whereArr['logindate'] = $date;
+        $whereArr['emailaddress'] = $emailaddress;
+        // $whereArr['spassword'] = $password;
+        // $whereArr['logindate'] = $date;
         $whereArr['isactive'] = 1;
-        $responseData = UserLoginModel::where($whereArr)->get();
-        
-       
-        // 	//create log for this session
-        //     SessionCountryModel::create([
-        //       'countrycode'=>$countrycode,
-        //       'sessionstarted'=>date('Y-m-d H:i:s'),
-        //       'createddate'=>date('Y-m-d H:i:s')
-        //     ]);
-       
+        $responseData = UserLoginModel::where($whereArr)->first();
+
+        /*create log for this session
+        SessionCountryModel::create([
+            'countrycode'=>$countrycode,
+            'sessionstarted'=>date('Y-m-d H:i:s'),
+            'createddate'=>date('Y-m-d H:i:s')
+        ]);*/
+        if(!is_null($responseData)){
+            $arrUser['username'] =  $emailaddress;
+            $user = (object)$arrUser;
+            Session::put('user',$user); 
+            return redirect('/');
+        } else {
+            Session::forget('user');
+            return redirect('../DiscountToolLogin.php');
+        }
+
         if(!empty($responseData) && count($responseData) > 0) {
-        if(!empty($accesskey) && !empty($secretkey) && $accesskey == $secretkey) {
-          if(!empty($pageid)) {
-            $pageData = PagemasterModel::find($pageid);
-            if(!empty($pageData)) {
-               $user = json_decode(json_encode($responseData[0]));
-               Session::put('user',$user); 
-              return redirect($pageData->pagename);
+            if(!empty($accesskey) && !empty($secretkey) && $accesskey == $secretkey) {
+                if(!empty($pageid)) {
+                    $pageData = PagemasterModel::find($pageid);
+                    if(!empty($pageData)) {
+                        $user = json_decode(json_encode($responseData[0]));
+                        Session::put('user',$user); 
+                        return redirect($pageData->pagename);
+                    } else {
+                        echo "Invalid Request";    
+                    }
+                } else {
+                    echo "Invalid Request";
+                }
             } else {
-               echo "Invalid Request";    
+                echo "Invalid Request";
             }
-          } else {
-            echo "Invalid Request";
-          }
         } else {
             echo "Invalid Request";
         }
-      } else {
-        echo "Invalid Request";
-      }
     }
 
     public function logout() {
-    	Session::forget('user');
+        Session::forget('user');
+        return redirect('../DiscountToolLogin.php');
     }
 }

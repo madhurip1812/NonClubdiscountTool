@@ -1,4 +1,4 @@
-@extends('layouts.FitLayoutapp')
+@extends('layouts.app')
 
 @section('header')
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
@@ -7,6 +7,28 @@
 @section('content')
 @php($fromNo = ($FitJuniorPlanRule->currentPage() - 1) * $FitJuniorPlanRule->perPage() +1)
 @php($toNo = $fromNo - 1 + $FitJuniorPlanRule->count())
+<div id="error-success-massage">
+    @if (Session::has('success'))
+    <div class="mt-2 row justify-content-center">
+        <div class="col-md-8 alert alert-success text-center " id="success-massage">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            {{Session::get('success')}}
+        </div>
+    </div>
+    @endif                            
+    @if (Session::has('error'))
+    <div class="mt-2 row justify-content-center" id="error-massage">
+        <div class="col-md-8 alert alert-danger text-center " >
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            {{Session::get('error')}}
+        </div>
+    </div>
+    @endif
+</div>
     <div class="col-md-12 " >
             <div class="card">
                 <div class="card-header">
