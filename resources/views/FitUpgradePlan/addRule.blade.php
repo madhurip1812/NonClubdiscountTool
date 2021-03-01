@@ -45,12 +45,12 @@
                         <table class="table table-bordered table-hover" id="fitruleTable">
                             <thead class="thead-light">
                                 <tr>
-                                    <th scope="col" class="cls-prod-column">ProductId</th>
-                                    <th scope="col" class="cls-prod-column">ProductName</th>
-                                    <th scope="col">UppgradePlanOptions</th>
-                                    <th scope="col" class="cls-lmdate-column">UpgradeDateFrom</th>
-                                    <th scope="col" class="cls-lmdate-column">UpgradeDateTo</th>
-                                    <th scope="col">UpgradePostExpiry</th>
+                                    <th scope="col" class="cls-prod-column">Product Id</th>
+                                    <th scope="col" class="cls-prod-column">Rule Name</th>
+                                    <th scope="col">Uppgrade Plan Options</th>
+                                    <th scope="col" class="cls-lmdate-column">Upgrade Date From</th>
+                                    <th scope="col" class="cls-lmdate-column">Upgrade Date To</th>
+                                    <th scope="col">Upgrade Post Expiry</th>
                                     <th scope="col">IsActive</th>
                                     <th scope="col">Edit</th>
                                 </tr>
@@ -100,9 +100,9 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="productname" class="control-label col-sm-2">Product Name</label>
+                        <label for="productname" class="control-label col-sm-2">Rule Name</label>
                         <div class="col-sm-6">
-                          <input type="text" class="form-control" id="productname" name="productname" placeholder="Product Name" required>
+                          <input type="text" class="form-control" id="productname" name="productname" placeholder="Rule Name" required>
                         </div>
                     </div>
                     <div class="form-group row">

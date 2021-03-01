@@ -88,7 +88,7 @@
                     </div>
                     <div class="btn-group ml-3">
                         <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Cashback
+                            Offer
                         </button>
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="{{url('/listcashback')}}">Search Cashback</a>

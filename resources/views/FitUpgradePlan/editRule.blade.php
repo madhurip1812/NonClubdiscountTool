@@ -13,9 +13,9 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="productname" class="control-label col-sm-2">Product Name</label>
+                        <label for="productname" class="control-label col-sm-2">Rule Name</label>
                         <div class="col-sm-6">
-                          <input type="text" class="form-control" id="productname" name="productname" placeholder="Product Name" value="{{$FitJuniorPlanRule['productname']}}" readonly required>
+                          <input type="text" class="form-control" id="productname" name="productname" placeholder="Rule Name" value="{{$FitJuniorPlanRule['productname']}}" readonly required>
                         </div>
                     </div>
                     <div class="form-group row">
