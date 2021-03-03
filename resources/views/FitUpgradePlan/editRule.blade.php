@@ -42,8 +42,8 @@
                         <label for="upgradepostexpiry" class="control-label col-sm-2">Upgrade Post Expiry</label>
                         <div class="col-sm-6">
                         <select name="upgradepostexpiry" class="custom-select" required>
-                         <option value="yes"  {{$FitJuniorPlanRule['upgradepostexpiry'] == "yes" ? 'selected' : ''}}>Yes</option>
-                          <option value="no" {{$FitJuniorPlanRule['upgradepostexpiry'] == "no" ? 'selected' : ''}}>No</option>
+                         <option value="1"  {{$FitJuniorPlanRule['upgradepostexpiry'] == "1" ? 'selected' : ''}}>Yes</option>
+                          <option value="0" {{$FitJuniorPlanRule['upgradepostexpiry'] == "0" ? 'selected' : ''}}>No</option>
                          </select>
                         </div>
                     </div>
@@ -62,6 +62,7 @@
                         <div class="offset-sm-2 col-sm-10 pull-right">
                             <button type="submit" class="btn btn-success">Save Rule</button>
                             <button type="reset" class="btn btn-danger">Cancel</button>
+                            <button type="button" class="btn btn-primary" id="searchRules">Search</button>
                         </div>
                     </div>
                 </form>
@@ -100,7 +101,12 @@
         }); 
     function hasValue(elem) {
       return $(elem).filter(function() { return $(this).val(); }).length > 0;
-     }
+    }
+    $("#searchRules").click(function(){
+      $('html, body').animate({
+        scrollTop: ($('#searchRulesDiv').offset().top)
+      },500);
+    });
          
     
 </script>

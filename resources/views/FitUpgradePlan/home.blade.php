@@ -49,7 +49,7 @@
                                     <th scope="col" class="cls-lmdate-column">Validtodate</th>
                                     <th scope="col" class="cls-lmdate-column">Validfromdate</th>
                                     <th scope="col">Ruletype</th>
-                                    <th scope="col">Ruledata</th>
+                                    <!-- <th scope="col">Ruledata</th> -->
                                     <th scope="col">Details</th>
                                 </tr>
                             </thead>
@@ -62,7 +62,7 @@
                                     <td>{{$value->validtodate? date('d/m/Y',strtotime($value->validtodate)) : ''}}</td>
                                     <td>{{$value->validfromdate? date('d/m/Y',strtotime($value->validfromdate)) : ''}}</td>
                                     <td>{{$value->ruletype}}</td>
-                                    <td>{{$value->ruledata}}</td>
+                                    <!-- <td>{{$value->ruledata}}</td> -->
                                     <td><a href="./FitJuniorPlanUpgradeSystem/{{$value->id}}">details</a></td>
                                 </tr>
                                 @endforeach

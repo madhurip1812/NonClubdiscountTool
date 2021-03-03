@@ -8,7 +8,12 @@ $(document).ready(function(){
 
 
 
-	$(".editfitjuniorplan").click(function(){
+	$("#searchRules").click(function(){
+    $('html, body').animate({
+      scrollTop: ($('#searchRulesDiv').offset().top)
+    },500);
+  });
+  $(".editfitjuniorplan").click(function(){
 		 var productid=$(this).attr("id");
 
 		 $.ajax({
@@ -21,7 +26,9 @@ $(document).ready(function(){
                 // console.log('data = ',data);
                 document.getElementById('addeditformdiv').style.display = 'block';
                 $("#addeditformdiv").empty().append(data.html);
-
+                $('html, body').animate({
+                  scrollTop: ($('#addeditformdiv').offset().top)
+                },500);
                
             }
         });

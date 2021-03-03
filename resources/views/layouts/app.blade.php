@@ -94,6 +94,7 @@
                             <a class="dropdown-item" href="{{url('/listcashback')}}">Search Cashback</a>
                             <a class="dropdown-item" href="{{url('/addcashback')}}">Add Cashback</a>
                             <a class="dropdown-item" href="{{url('/PreCartOffer')}}">Pre Cart Offer</a>
+                            <a class="dropdown-item" href="{{url('/couponpurchaserdetail')}}">Coupon Purchaser Detail</a>
                         </div>
                     </div>
                 </div>

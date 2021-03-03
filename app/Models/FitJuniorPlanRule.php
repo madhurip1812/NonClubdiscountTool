@@ -11,5 +11,5 @@ class FitJuniorPlanRule extends Model
 	protected $table = 'fitjuniorplanrule';
 	public $timestamps=false;
     protected $primaryKey = 'productid';
-
+    protected $fillable = ['upgradepostexpiry','upgradeplanoption','upgradedateto','upgradedatefrom','productname','productid','precartofferid','isactive'];
 }

@@ -56,7 +56,7 @@
 								</div>
 							</div>
 							<div class="form-group row">
-								<label for="cashoncoupon" class="col-sm-4 col-form-label">Cashback On Coupon:<span class="text-danger">*</span></label>
+								<label for="cashoncoupon" class="col-sm-4 col-form-label">Cashback On Coupon:</label>
 								<div class="col-sm-7">
 									<input type="text" name="cashoncoupon" id="cashoncoupon" value="@if(!empty($cashBackData)&&!empty($cashBackData->CashBackOnCoupon)){{$cashBackData->CashBackOnCoupon}}@endif" class="form-control" />
 								</div>

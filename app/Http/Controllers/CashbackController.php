@@ -27,7 +27,7 @@ class CashbackController extends Controller
       	  'rulefor' => 'required',
           'rulename'=>'required',
           //'cashcoupon'=>'required',
-          'cashoncoupon'=>'required',
+          // 'cashoncoupon'=>'required',
           'cashoutcoupon'=>'required',
           'cashvaliddays'=>'required',
           'cashperc'=>'required',

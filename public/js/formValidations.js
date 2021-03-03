@@ -3,7 +3,7 @@ $("#addcashback").validate({
       'rulefor':'required',
       //'cashcoupon':'required',   
       'rulename':'required',
-      'cashoncoupon':'required',
+      // 'cashoncoupon':'required',
       'cashoutcoupon':'required',
       'cashvaliddays':'required',
       'cashperc':'required',

@@ -64,6 +64,7 @@ Route::group(['middleware' => ['usersession']], function () {
 	//fitjunior route end
 	Route::get('/PreCartOffer', 'FitUpgradePlanController@index')->name('PreCartOffer');
 	Route::get('/FitJuniorPlanUpgradeSystem/{id}', 'FitUpgradePlanController@search')->name('FitJuniorPlanUpgradeSystem');
+	Route::get('/b2bCashbackOrders/{id}', 'FitUpgradePlanController@getb2bCashbackOrders')->name('getb2bCashbackOrders');
 	Route::post('/FitJuniorPlanUpgradeSystemCreate', 'FitUpgradePlanController@store')->name('FitJuniorPlanUpgradeSystemCreate');
 	Route::get('/FitJuniorPlanUpgradeSystemEdit', 'FitUpgradePlanController@edit')->name('FitJuniorPlanUpgradeSystemEdit');
 	Route::post('/FitJuniorPlanUpgradeSystemUpdate/{id}', 'FitUpgradePlanController@update')->name('FitJuniorPlanUpgradeSystemUpdate');
